@@ -25,41 +25,55 @@ enum Status {
   DONE
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
-  id          Int  @id @default(autoincrement())
-  authSchId      String
+  id             Int     @id @default(autoincrement())
+  authSchId      String //Ez majd a belepeshez kell
   email          String  @unique
-  groups         Group[]
   profilePicture String?
+  groups         GroupMembers[]
   events         Event[]
 }
 
 model Group {
-  id          Int  @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
-  members     User[]
+  members     GroupMembers[]
   events      Event[]
 }
 
+model GroupMembers {
+  groupId Int
+  userId  Int
+  role    Role @default(USER)
+
+  @@id([groupId, userId])
+  Group   Group @relation(fields: [groupId], references: [id])
+  User    User  @relation(fields: [userId], references: [id])
+}
+
 model Event {
-  id          Int  @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   name         String
   description  String?
-  date         DateTime
-  location     String
-  categoryId   Int
-  category     Category @relation(fields: [categoryId], references: [id])
+  date         DateTime @default(now())
   priority     Priority
   status       Status
+  categoryId   Int
+  category     Category @relation(fields: [categoryId], references: [id])
   ownerUserId  Int?
-  ownerUser    User?    @relation(fields: [ownerUserId], references: [id])
+  ownerUser    User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   ownerGroupId Int?
-  ownerGroup   Group?   @relation(fields: [ownerGroupId], references: [id])
+  ownerGroup   Group?   @relation(fields: [ownerGroupId], references: [id], onDelete: Cascade)
 }
 
 model Category {
-  id          Int  @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
   events      Event[]
