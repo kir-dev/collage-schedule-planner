@@ -13,7 +13,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum Status {
+  OPEN
+  IN_PROGRESS
+  DONE
+}
+
 model User {
-  authSchId String @id
-  email     String @unique
+  id          Int  @id @default(autoincrement())
+  authSchId      String
+  email          String  @unique
+  groups         Group[]
+  profilePicture String?
+  events         Event[]
+}
+
+model Group {
+  id          Int  @id @default(autoincrement())
+  name        String
+  description String?
+  members     User[]
+  events      Event[]
+}
+
+model Event {
+  id          Int  @id @default(autoincrement())
+  name         String
+  description  String?
+  date         DateTime
+  location     String
+  categoryId   Int
+  category     Category @relation(fields: [categoryId], references: [id])
+  priority     Priority
+  status       Status
+  ownerUserId  Int?
+  ownerUser    User?    @relation(fields: [ownerUserId], references: [id])
+  ownerGroupId Int?
+  ownerGroup   Group?   @relation(fields: [ownerGroupId], references: [id])
+}
+
+model Category {
+  id          Int  @id @default(autoincrement())
+  name        String
+  description String?
+  events      Event[]
 }
