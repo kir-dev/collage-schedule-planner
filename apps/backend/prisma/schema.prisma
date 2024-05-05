@@ -17,11 +17,13 @@ enum Priority {
   LOW
   MEDIUM
   HIGH
+  URGENT
 }
 
 enum Status {
-  OPEN
+  NOT_STARTED
   IN_PROGRESS
+  WAITING_FOR_REVIEW
   DONE
 }
 
@@ -31,16 +33,16 @@ enum Role {
 }
 
 model User {
-  id             Int     @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   authSchId      String //Ez majd a belepeshez kell
-  email          String  @unique
+  email          String         @unique
   profilePicture String?
   groups         GroupMembers[]
   events         Event[]
 }
 
 model Group {
-  id          Int     @id @default(autoincrement())
+  id          Int            @id @default(autoincrement())
   name        String
   description String?
   members     GroupMembers[]
@@ -50,31 +52,36 @@ model Group {
 model GroupMembers {
   groupId Int
   userId  Int
-  role    Role @default(USER)
-
-  @@id([groupId, userId])
+  role    Role  @default(USER)
   Group   Group @relation(fields: [groupId], references: [id])
   User    User  @relation(fields: [userId], references: [id])
+
+  @@id([groupId, userId])
 }
 
 model Event {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
   description  String?
-  date         DateTime @default(now())
-  priority     Priority
-  status       Status
+  location     String?
+  startDate    DateTime  @default(now()) @db.Date
+  endDate      DateTime? @db.Date
+  startTime    DateTime? @db.Time
+  endTime      DateTime? @db.Time
+  priority     Priority  @default(MEDIUM)
+  status       Status    @default(NOT_STARTED)
   categoryId   Int
-  category     Category @relation(fields: [categoryId], references: [id])
+  category     Category  @relation(fields: [categoryId], references: [id])
   ownerUserId  Int?
-  ownerUser    User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  ownerUser    User?     @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   ownerGroupId Int?
-  ownerGroup   Group?   @relation(fields: [ownerGroupId], references: [id], onDelete: Cascade)
+  ownerGroup   Group?    @relation(fields: [ownerGroupId], references: [id], onDelete: Cascade)
 }
 
 model Category {
   id          Int     @id @default(autoincrement())
   name        String
+  color       String  @default("#000000")
   description String?
   events      Event[]
 }
