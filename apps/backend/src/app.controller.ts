@@ -10,4 +10,8 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get('/health')
+  getHealth(): { message: string } {
+    return { message: 'Server is running' };
+  }
 }
