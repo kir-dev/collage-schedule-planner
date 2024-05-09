@@ -26,7 +26,7 @@ export class GroupsService {
     try {
       return await this.prisma.group.update({ where: { id }, data });
     } catch {
-      throw new Error(`Group with ID ${id} not found`);
+      throw new Error(`Group with ID ${id} could not be updated`);
     }
   }
 
@@ -34,9 +34,27 @@ export class GroupsService {
     try {
       return await this.prisma.group.delete({ where: { id } });
     } catch {
-      throw new Error(`Group with ID ${id} not found`);
+      throw new Error(`Group with ID ${id} could not be deleted`);
     }
   }
 
-  //async addMembers(id: number, data: Prisma.GroupUpdateInput): Promise<Group> {} //TODO
+  addMember(groupId: number, userId: number) {
+    return this.prisma.groupMembers.create({
+      data: {
+        groupId,
+        userId,
+      },
+    });
+  }
+
+  removeMember(groupId: number, userId: number) {
+    return this.prisma.groupMembers.delete({
+      where: {
+        groupId_userId: {
+          groupId,
+          userId,
+        },
+      },
+    });
+  }
 }

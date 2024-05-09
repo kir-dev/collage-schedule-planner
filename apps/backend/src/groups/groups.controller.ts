@@ -31,4 +31,14 @@ export class GroupsController {
   remove(@Param('id') id: string) {
     return this.groupsService.remove(Number(id));
   }
+
+  @Post(':id/members/:userId')
+  addMember(@Param('id') id: string, @Param('userId') userId: string) {
+    return this.groupsService.addMember(Number(id), Number(userId));
+  }
+
+  @Delete(':id/members/:userId')
+  removeMember(@Param('id') id: string, @Param('userId') userId: string) {
+    return this.groupsService.removeMember(Number(id), Number(userId));
+  }
 }

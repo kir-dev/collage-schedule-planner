@@ -27,7 +27,7 @@ export class GroupmembersService {
     try {
       return await this.prisma.groupMembers.update({ where: { groupId_userId: { groupId, userId } }, data });
     } catch {
-      throw new Error(`Groupmember with this ID not found`);
+      throw new Error(`Groupmember with this ID could not be updated`);
     }
   }
 
@@ -35,7 +35,7 @@ export class GroupmembersService {
     try {
       return await this.prisma.groupMembers.delete({ where: { groupId_userId: { groupId, userId } } });
     } catch {
-      throw new Error(`Groupmember with this ID not found`);
+      throw new Error(`Groupmember with this ID could not be deleted`);
     }
   }
 }
