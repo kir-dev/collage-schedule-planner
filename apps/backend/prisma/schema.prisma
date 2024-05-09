@@ -85,3 +85,11 @@ model Category {
   description String?
   events      Event[]
 }
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  priority    Priority  @default(MEDIUM)
+  status      Status    @default(NOT_STARTED)
+}
