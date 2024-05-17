@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { Group, Prisma } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Group, GroupMembers, Prisma, Role, User } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
@@ -11,22 +11,41 @@ export class GroupsService {
   }
 
   async findAll(): Promise<Group[]> {
-    return this.prisma.group.findMany();
+    if (!this.prisma.group) {
+      throw new NotFoundException('Groups not found');
+    }
+    return await this.prisma.group.findMany();
   }
 
   async findOne(id: number): Promise<Group> {
     const group = await this.prisma.group.findUnique({ where: { id: id } });
     if (!group) {
-      throw new Error(`Group with ID ${id} not found`);
+      throw new NotFoundException(`Group with ID ${id} not found`);
     }
     return group;
+  }
+
+  async findMembers(id: number): Promise<User[]> {
+    const userids = await this.prisma.groupMembers.findMany({
+      where: {
+        groupId: id,
+      },
+    });
+    const members = await this.prisma.user.findMany({
+      where: {
+        id: {
+          in: userids.map((member) => member.userId),
+        },
+      },
+    });
+    return members;
   }
 
   async update(id: number, data: Prisma.GroupUpdateInput): Promise<Group> {
     try {
       return await this.prisma.group.update({ where: { id }, data });
     } catch {
-      throw new Error(`Group with ID ${id} could not be updated`);
+      throw new NotFoundException(`Group with ID ${id} could not be updated`);
     }
   }
 
@@ -34,15 +53,30 @@ export class GroupsService {
     try {
       return await this.prisma.group.delete({ where: { id } });
     } catch {
-      throw new Error(`Group with ID ${id} could not be deleted`);
+      throw new NotFoundException(`Group with ID ${id} could not be deleted`);
     }
   }
 
-  addMember(groupId: number, userId: number) {
-    return this.prisma.groupMembers.create({
+  async addMember(groupId: number, userId: number): Promise<GroupMembers> {
+    const groupMember = await this.prisma.groupMembers.create({
       data: {
-        groupId,
-        userId,
+        groupId: groupId,
+        userId: userId,
+      },
+    });
+    return this.prisma.groupMembers.create({ groupMember });
+  }
+
+  async updateMember(groupId: number, userId: number, newRole: Role): Promise<GroupMembers> {
+    return this.prisma.groupMembers.update({
+      where: {
+        groupId_userId: {
+          groupId,
+          userId,
+        },
+      },
+      data: {
+        role: newRole,
       },
     });
   }

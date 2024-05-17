@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Role } from '@prisma/client';
 
 import { GroupsService } from './groups.service';
 
@@ -22,6 +22,11 @@ export class GroupsController {
     return this.groupsService.findOne(Number(id));
   }
 
+  @Get(':id/members')
+  findMembers(@Param('id') id: string) {
+    return this.groupsService.findMembers(Number(id));
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() data: Prisma.GroupUpdateInput) {
     return this.groupsService.update(Number(id), data);
@@ -35,6 +40,11 @@ export class GroupsController {
   @Post(':id/members/:userId')
   addMember(@Param('id') id: string, @Param('userId') userId: string) {
     return this.groupsService.addMember(Number(id), Number(userId));
+  }
+
+  @Patch(':id/members/:userId')
+  updateRole(@Param('id') id: string, @Param('userId') userId: string, @Body() newRole: Role) {
+    return this.groupsService.updateMember(Number(id), Number(userId), newRole);
   }
 
   @Delete(':id/members/:userId')
