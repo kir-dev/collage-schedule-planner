@@ -26,19 +26,11 @@ export class GroupsService {
   }
 
   async findMembers(id: number): Promise<User[]> {
-    const userids = await this.prisma.groupMembers.findMany({
-      where: {
-        groupId: id,
-      },
-    });
-    const members = await this.prisma.user.findMany({
-      where: {
-        id: {
-          in: userids.map((member) => member.userId),
-        },
-      },
-    });
-    return members;
+    const group = await this.prisma.group.findUnique({ where: { id }, include: { members: true } });
+    if (!group) {
+      throw new NotFoundException(`Group with ID ${id} not found`);
+    }
+    return this.prisma.user.findMany({ where: { id: { in: group.members.map((member) => member.userId) } } });
   }
 
   async update(id: number, data: Prisma.GroupUpdateInput): Promise<Group> {
@@ -64,7 +56,7 @@ export class GroupsService {
         userId: userId,
       },
     });
-    return this.prisma.groupMembers.create({ groupMember });
+    return groupMember;
   }
 
   async updateMember(groupId: number, userId: number, newRole: Role): Promise<GroupMembers> {
