@@ -3,11 +3,10 @@ import { PrismaModule } from 'nestjs-prisma';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GroupmembersModule } from './groupmembers/groupmembers.module';
 import { GroupsModule } from './groups/groups.module';
 
 @Module({
-  imports: [PrismaModule.forRoot({ isGlobal: true }), GroupsModule, GroupmembersModule],
+  imports: [PrismaModule.forRoot({ isGlobal: true }), GroupsModule],
   controllers: [AppController],
   providers: [AppService],
 })
