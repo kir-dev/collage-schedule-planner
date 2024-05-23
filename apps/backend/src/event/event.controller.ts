@@ -15,22 +15,22 @@ export class EventController {
   }
 
   @Get()
-  findAll() {
-    return this.eventService.findAll();
+  async findAll() {
+    return await this.eventService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventService.findOne(Number(id));
+  async findOne(@Param('id') id: string) {
+    return await this.eventService.findOne(Number(id));
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.EventUpdateInput) {
-    return this.eventService.update(Number(id), data);
+  async update(@Param('id') id: string, @Body() data: Prisma.EventUpdateInput) {
+    return await this.eventService.update(Number(id), data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventService.remove(Number(id));
+  async remove(@Param('id') id: string) {
+    return await this.eventService.remove(Number(id));
   }
 }
