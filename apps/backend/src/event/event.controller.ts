@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 
-/*import { CreateEventDto } from './dto/create-event.dto';*/
-/*import { UpdateEventDto } from './dto/update-event.dto';*/
+//import { Prisma } from '@prisma/client';
+import { CreateEventDto } from './dto/create-event.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
 import { EventService } from './event.service';
 
 @Controller('event')
@@ -10,7 +10,7 @@ export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Post()
-  create(@Body() data: Prisma.EventCreateInput) {
+  create(@Body() data: CreateEventDto) {
     return this.eventService.create(data);
   }
 
@@ -25,7 +25,7 @@ export class EventController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() data: Prisma.EventUpdateInput) {
+  async update(@Param('id') id: string, @Body() data: UpdateEventDto) {
     return await this.eventService.update(Number(id), data);
   }
 
