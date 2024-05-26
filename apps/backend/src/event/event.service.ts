@@ -10,15 +10,7 @@ export class EventService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateEventDto): Promise<Event> {
-    const { category, ownerUser, ownerGroup, ...rest } = data;
-    return await this.prisma.event.create({
-      data: {
-        ...rest,
-        category: { connect: { id: category.id } },
-        ownerUser: { connect: { id: ownerUser.id } },
-        ownerGroup: { connect: { id: ownerGroup.id } },
-      },
-    });
+    return await this.prisma.event.create({ data });
   }
 
   async findAll(): Promise<Event[]> {
@@ -37,16 +29,7 @@ export class EventService {
 
   async update(id: number, data: UpdateEventDto): Promise<Event> {
     try {
-      const { category, ownerUser, ownerGroup, ...rest } = data;
-      return await this.prisma.event.update({
-        where: { id: id },
-        data: {
-          ...rest,
-          category: { connect: { id: category.id } },
-          ownerUser: { connect: { id: ownerUser.id } },
-          ownerGroup: { connect: { id: ownerGroup.id } },
-        },
-      });
+      return await this.prisma.event.update({ where: { id: id }, data });
     } catch (e) {
       throw new NotFoundException(`Event with ID ${id} not found`);
     }
