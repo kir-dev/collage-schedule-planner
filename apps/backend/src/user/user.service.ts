@@ -23,9 +23,9 @@ export class UserService {
     }
   }
 
-  findAll(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     try {
-      return this.prisma.user.findMany();
+      return await this.prisma.user.findMany();
     } catch (error) {
       throw new NotFoundException(`Users not found ${error.message}`);
     }
