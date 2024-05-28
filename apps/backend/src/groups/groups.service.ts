@@ -79,12 +79,9 @@ export class GroupsService {
     }
   }
 
-  async updateMember(groupId: number, userId: number, newRole: Role): Promise<GroupMembers> {
-    if (Role[newRole] === Role.ADMIN) {
-      throw new NotFoundException('newRole is ADMIN.');
-    }
+  async updateMemberRole(groupId: number, userId: number, newRole: { role: Role }): Promise<GroupMembers> {
     if (!(await this.prisma.groupMembers.findUnique({ where: { groupId_userId: { groupId, userId } } }))) {
-      throw new NotFoundException(`User is not a member of the group ${newRole}`);
+      throw new NotFoundException(`User with id: ${userId} is not a member of the group.`);
     }
     try {
       return await this.prisma.groupMembers.update({
@@ -95,11 +92,11 @@ export class GroupsService {
           },
         },
         data: {
-          role: newRole,
+          role: newRole.role,
         },
       });
     } catch {
-      throw new NotFoundException('User role could not be updated');
+      throw new NotFoundException('User role could not be updated.');
     }
   }
 

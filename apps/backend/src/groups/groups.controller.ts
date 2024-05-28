@@ -43,8 +43,8 @@ export class GroupsController {
   }
 
   @Patch(':id/members/:userId')
-  updateRole(@Param('id') id: string, @Param('userId') userId: string, @Body() newRole: Role) {
-    return this.groupsService.updateMember(Number(id), Number(userId), newRole);
+  updateRole(@Param('id') id: string, @Param('userId') userId: string, @Body() newRole: { role: Role }) {
+    return this.groupsService.updateMemberRole(Number(id), Number(userId), newRole);
   }
 
   @Delete(':id/members/:userId')
