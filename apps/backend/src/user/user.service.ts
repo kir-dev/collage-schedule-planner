@@ -15,22 +15,35 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
-    if (!user) throw new NotFoundException(`Task with ID ${id} not found`);
-    return user;
+    try {
+      const user = await this.prisma.user.findUnique({ where: { id } });
+      return user;
+    } catch (error) {
+      throw new NotFoundException(`User with ID ${id} not found ${error.message}`);
+    }
   }
 
   findAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    try {
+      return this.prisma.user.findMany();
+    } catch (error) {
+      throw new NotFoundException(`Users not found ${error.message}`);
+    }
   }
 
   async update(id: number, data: Prisma.UserUpdateInput): Promise<User> {
-    if (!id) throw new NotFoundException(`Task with ID ${id} not found`);
-    return await this.prisma.user.update({ where: { id }, data: data });
+    try {
+      return await this.prisma.user.update({ where: { id }, data: data });
+    } catch (error) {
+      throw new NotFoundException(`User with ID ${id} not found ${error.message}`);
+    }
   }
 
   async remove(id: number): Promise<User> {
-    if (!id) throw new NotFoundException(`Task with ID ${id} not found`);
-    return await this.prisma.user.delete({ where: { id } });
+    try {
+      return await this.prisma.user.delete({ where: { id } });
+    } catch (error) {
+      throw new NotFoundException(`User with ID ${id} not found ${error.message}`);
+    }
   }
 }
