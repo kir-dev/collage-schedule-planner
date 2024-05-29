@@ -1,6 +1,10 @@
 import { IsEmail, IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
 export class User {
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
   @IsInt()
   @Min(1)
   id: number;
