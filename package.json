@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "@nestjs/mapped-types": "*"
-  },
   "name": "next-nest-template",
   "version": "0.0.0",
   "description": "Template repository for full-stack NestJS + NextJS projects",
