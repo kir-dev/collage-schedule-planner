@@ -1,5 +1,4 @@
 {
-
   "name": "next-nest-template",
   "version": "0.0.0",
   "description": "Template repository for full-stack NestJS + NextJS projects",
@@ -15,10 +14,13 @@
     "start:frontend": "cd apps/frontend && yarn dev",
     "build:backend": "cd apps/backend && yarn build",
     "build:frontend": "cd apps/frontend && yarn build",
-    "lint": "eslint apps/* --ext .ts,.tsx --max-warnings 0",
-    "lint:fix": "eslint apps/* --ext .ts,.tsx --fix",
+    "lint": "eslint apps --ext .ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint apps --ext .ts,.tsx --fix",
     "format": "prettier --write apps",
     "format:check": "prettier --check apps"
+  },
+  "dependencies": {
+    "@nestjs/mapped-types": "^2.0.5"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
