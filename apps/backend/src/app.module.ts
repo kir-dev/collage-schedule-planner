@@ -3,12 +3,12 @@ import { PrismaModule } from 'nestjs-prisma';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
 import { EventModule } from './event/event.module';
 import { GroupsModule } from './groups/groups.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [UserModule, PrismaModule.forRoot({ isGlobal: true }), EventModule, GroupsModule],
+  imports: [PrismaModule.forRoot({ isGlobal: true }), EventModule, GroupsModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
