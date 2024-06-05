@@ -1,6 +1,21 @@
-import { Category, Group, Priority, Status, User } from '@prisma/client';
+import { Priority, Status } from '@prisma/client';
 import { IsDate, IsDateString, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
+export class Category {
+  @IsInt()
+  id: number;
+
+  @IsString()
+  name: string;
+
+  @IsString()
+  @IsOptional()
+  color: string;
+
+  @IsString()
+  @IsOptional()
+  description: string;
+}
 export class Event {
   @IsInt()
   @IsOptional()
@@ -19,6 +34,7 @@ export class Event {
   location: string;
 
   @IsDate()
+  @IsOptional()
   startDate: Date;
 
   @IsDate()
@@ -42,23 +58,14 @@ export class Event {
   status: Status;
 
   @IsInt()
-  @IsNotEmpty()
+  @IsOptional()
   categoryId: number;
 
-  @IsNotEmpty()
   category: Category;
 
   @IsInt()
-  @IsOptional()
   ownerUserId: number;
 
-  @IsOptional()
-  ownerUser: User;
-
   @IsInt()
-  @IsOptional()
   ownerGroupId: number;
-
-  @IsOptional()
-  ownerGroup: Group;
 }
