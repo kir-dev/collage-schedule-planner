@@ -303,9 +303,13 @@
     path-to-regexp "3.2.0"
     tslib "2.6.2"
 
+<<<<<<< HEAD
 "@nestjs/mapped-types@*", "@nestjs/mapped-types@2.0.5":
+=======
+"@nestjs/mapped-types@2.0.5":
+>>>>>>> 76a675af0de806347ba6c27372be1633ba014b43
   version "2.0.5"
-  resolved "https://registry.npmjs.org/@nestjs/mapped-types/-/mapped-types-2.0.5.tgz"
+  resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-2.0.5.tgz#485d6b44e19779c98d04e52bd1d2bcc7001df0ea"
   integrity sha512-bSJv4pd6EY99NX9CjBIyn4TVDoSit82DUZlL4I3bqNfy5Gt+gXTa86i3I/i0iIV9P4hntcGM5GyO+FhZAhxtyg==
 
 "@nestjs/platform-express@^10.3.8":
