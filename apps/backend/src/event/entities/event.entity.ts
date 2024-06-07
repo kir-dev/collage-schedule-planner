@@ -53,7 +53,7 @@ export class Event {
   @IsOptional()
   priority: Priority;
 
-  @IsEnum(Priority)
+  @IsEnum(Status)
   @IsOptional()
   status: Status;
 

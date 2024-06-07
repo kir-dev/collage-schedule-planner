@@ -22,10 +22,6 @@
     "@prisma/client": "^5.13.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
-<<<<<<< HEAD
-    "nestjs": "^0.0.1",
-=======
->>>>>>> 76a675af0de806347ba6c27372be1633ba014b43
     "nestjs-prisma": "^0.23.0",
     "reflect-metadata": "^0.2.2",
     "rimraf": "^5.0.5",
