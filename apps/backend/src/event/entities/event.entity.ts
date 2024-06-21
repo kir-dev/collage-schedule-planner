@@ -6,11 +6,11 @@ export class Category {
   id: number;
 
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @IsString()
-  @IsOptional()
-  color: string;
+  color?: string;
 
   @IsString()
   @IsOptional()
@@ -18,7 +18,6 @@ export class Category {
 }
 export class Event {
   @IsInt()
-  @IsOptional()
   id: number;
 
   @IsString()
@@ -58,10 +57,7 @@ export class Event {
   status: Status;
 
   @IsInt()
-  @IsOptional()
   categoryId: number;
-
-  category: Category;
 
   @IsInt()
   ownerUserId: number;
