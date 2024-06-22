@@ -29,9 +29,9 @@
 
     "build:frontend": "cd apps/frontend && yarn build",
 
-    "lint": "eslint apps/* --ext .ts,.tsx --max-warnings 0",
+    "lint": "eslint apps --ext .ts,.tsx --max-warnings 0",
 
-    "lint:fix": "eslint apps/* --ext .ts,.tsx --fix",
+    "lint:fix": "eslint apps --ext .ts,.tsx --fix",
 
     "format": "prettier --write apps",
 
@@ -43,7 +43,7 @@
 
     "eslint": "^8.57.0",
 
-    "eslint-config-next": "14.2.2",
+    "eslint-config-next": "14.2.3",
 
     "eslint-config-prettier": "^9.1.0",
 
@@ -51,7 +51,7 @@
 
     "eslint-plugin-simple-import-sort": "^12.1.0",
 
-    "prettier": "^3.2.5"
+    "prettier": "^3.3.0"
 
   },
 
