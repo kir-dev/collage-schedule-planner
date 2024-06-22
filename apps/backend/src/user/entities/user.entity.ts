@@ -22,10 +22,12 @@ export class User {
   profilePicture: string;
 
   @IsInt()
+  @IsOptional()
   @Min(0)
   groups: number;
 
   @IsInt()
+  @IsOptional()
   @Min(0)
   events: number;
 }
