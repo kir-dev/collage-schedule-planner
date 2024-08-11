@@ -3,10 +3,10 @@ import { cn } from '@/lib/utils';
 
 export default function LandingNavbar() {
   return (
-    <div className={cn('flex flex-col md:flex-row min-h-screen w-full')}>
+    <div className={cn('flex flex-col md:flex-row')}>
       <div
         className={cn(
-          'w-full md:w-[270px] h-[300px] md:h-screen bg-[#031C30] flex flex-col justify-between items-center shadow-[0px_9px_94px_rgba(0,0,0,0.15)] relative'
+          'w-[270px] h-screen bg-[#031C30] flex flex-col justify-between items-center shadow-[0px_9px_94px_rgba(0,0,0,0.15)] relative'
         )}
       >
         {/* Logo és cím */}
