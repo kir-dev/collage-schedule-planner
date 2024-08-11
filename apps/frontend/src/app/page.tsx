@@ -1,9 +1,11 @@
-import { HelloWorld } from '@/components/hello-world';
+'use client';
+
+import Calendar from '@/components/calendar';
 
 export default function Home() {
   return (
-    <main className='flex items-center justify-center'>
-      <HelloWorld className='mt-10' />
+    <main>
+      <Calendar />
     </main>
   );
 }
