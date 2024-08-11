@@ -1,9 +1,9 @@
-import { HelloWorld } from '@/components/hello-world';
+import LandingNavbar from '@/components/landing-navbar';
 
 export default function Home() {
   return (
-    <main className='flex items-center justify-center'>
-      <HelloWorld className='mt-10' />
+    <main>
+      <LandingNavbar />
     </main>
   );
 }
