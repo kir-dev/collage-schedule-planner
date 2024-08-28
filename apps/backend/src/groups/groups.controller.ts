@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { Prisma, Role } from '@prisma/client';
+import { Role } from '@prisma/client';
 
+import { CreateGroupDto } from './dto/create-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 import { GroupsService } from './groups.service';
 
 @Controller('groups')
@@ -8,7 +10,7 @@ export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
-  create(@Body() data: Prisma.GroupCreateInput) {
+  create(@Body() data: CreateGroupDto) {
     return this.groupsService.create(data);
   }
 
@@ -28,7 +30,7 @@ export class GroupsController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() data: Prisma.GroupUpdateInput) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateGroupDto) {
     return this.groupsService.update(id, data);
   }
 
