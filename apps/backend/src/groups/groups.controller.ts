@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { Prisma, Role } from '@prisma/client';
 
 import { GroupsService } from './groups.service';
@@ -18,37 +18,41 @@ export class GroupsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.groupsService.findOne(Number(id));
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.groupsService.findOne(id);
   }
 
   @Get(':id/members')
-  findMembers(@Param('id') id: string) {
-    return this.groupsService.findMembers(Number(id));
+  findMembers(@Param('id', ParseIntPipe) id: number) {
+    return this.groupsService.findMembers(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.GroupUpdateInput) {
-    return this.groupsService.update(Number(id), data);
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: Prisma.GroupUpdateInput) {
+    return this.groupsService.update(id, data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.groupsService.remove(Number(id));
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.groupsService.remove(id);
   }
 
   @Post(':id/members/:userId')
-  addMember(@Param('id') id: string, @Param('userId') userId: string) {
-    return this.groupsService.addMember(Number(id), Number(userId));
+  addMember(@Param('id', ParseIntPipe) id: number, @Param('userId') userId: number) {
+    return this.groupsService.addMember(id, Number(userId));
   }
 
   @Patch(':id/members/:userId')
-  updateRole(@Param('id') id: string, @Param('userId') userId: string, @Body() newRole: { role: Role }) {
-    return this.groupsService.updateMemberRole(Number(id), Number(userId), newRole);
+  updateRole(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body() newRole: { role: Role }
+  ) {
+    return this.groupsService.updateMemberRole(id, userId, newRole);
   }
 
   @Delete(':id/members/:userId')
-  removeMember(@Param('id') id: string, @Param('userId') userId: string) {
-    return this.groupsService.removeMember(Number(id), Number(userId));
+  removeMember(@Param('id', ParseIntPipe) id: number, @Param('userId', ParseIntPipe) userId: number) {
+    return this.groupsService.removeMember(id, userId);
   }
 }
