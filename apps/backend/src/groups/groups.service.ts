@@ -1,12 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Group, GroupMembers, Prisma, Role, User } from '@prisma/client';
+import { Group, GroupMembers, Role, User } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
+
+import { CreateGroupDto } from './dto/create-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @Injectable()
 export class GroupsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.GroupCreateInput): Promise<Group> {
+  async create(data: CreateGroupDto): Promise<Group> {
     try {
       return await this.prisma.group.create({ data });
     } catch {
@@ -44,7 +47,7 @@ export class GroupsService {
     }));
   }
 
-  async update(id: number, data: Prisma.GroupUpdateInput): Promise<Group> {
+  async update(id: number, data: UpdateGroupDto): Promise<Group> {
     try {
       return await this.prisma.group.update({ where: { id }, data });
     } catch {
