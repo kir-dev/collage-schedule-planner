@@ -7,11 +7,7 @@ export class EventService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Prisma.EventCreateInput): Promise<Event> {
-    try {
-      return await this.prisma.event.create({ data });
-    } catch (e) {
-      throw new NotFoundException(`Event could not be created`);
-    }
+    return await this.prisma.event.create({ data });
   }
 
   async findAll(): Promise<Event[]> {
@@ -44,5 +40,9 @@ export class EventService {
     } catch (e) {
       throw new NotFoundException(`Event with ID ${id} not found`);
     }
+  }
+
+  async removeAll(): Promise<void> {
+    await this.prisma.event.deleteMany();
   }
 }
