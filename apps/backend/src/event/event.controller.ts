@@ -31,9 +31,4 @@ export class EventController {
   remove(@Param('id') id: string) {
     return this.eventService.remove(Number(id));
   }
-
-  @Delete()
-  removeAll() {
-    return this.eventService.removeAll();
-  }
 }

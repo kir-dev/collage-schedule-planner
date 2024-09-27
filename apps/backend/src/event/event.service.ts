@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Event, Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
@@ -7,7 +7,11 @@ export class EventService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Prisma.EventCreateInput): Promise<Event> {
-    return await this.prisma.event.create({ data });
+    try {
+      return await this.prisma.event.create({ data });
+    } catch (error) {
+      throw new BadRequestException('Event could not be created');
+    }
   }
 
   async findAll(): Promise<Event[]> {
@@ -40,9 +44,5 @@ export class EventService {
     } catch (e) {
       throw new NotFoundException(`Event with ID ${id} not found`);
     }
-  }
-
-  async removeAll(): Promise<void> {
-    await this.prisma.event.deleteMany();
   }
 }
