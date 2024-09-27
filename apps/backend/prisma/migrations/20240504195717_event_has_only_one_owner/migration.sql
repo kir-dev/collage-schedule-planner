@@ -15,5 +15,6 @@ ALTER TABLE IF EXISTS  "Event"
   ADD CONSTRAINT only_one_owner
   CHECK (
     ("ownerUserId" IS NOT NULL AND "ownerGroupId" IS NULL) OR
-    ("ownerUserId" IS NULL AND "ownerGroupId" IS NOT NULL)
+    ("ownerUserId" IS NULL AND "ownerGroupId" IS NOT NULL) OR
+    ("ownerUserId" IS NULL AND "ownerGroupId" IS NULL)
   );
