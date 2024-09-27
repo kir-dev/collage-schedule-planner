@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Event } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { Event } from './entities/event.entity';
 
 @Injectable()
 export class EventService {
@@ -14,7 +14,13 @@ export class EventService {
   }
 
   async findAll(): Promise<Event[]> {
-    return await this.prisma.event.findMany();
+    try {
+      const res = await this.prisma.event.findMany();
+      if (!res) throw new Error();
+      return res;
+    } catch (error) {
+      throw new NotFoundException('Events not found');
+    }
   }
 
   async findOne(id: number): Promise<Event> {

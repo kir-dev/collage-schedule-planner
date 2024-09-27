@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:postgres@localhost:5432/mydb?schema=public"
 }
 
 enum Priority {
@@ -70,8 +70,8 @@ model Event {
   endTime      DateTime? @db.Time
   priority     Priority  @default(MEDIUM)
   status       Status    @default(NOT_STARTED)
-  categoryId   Int
-  category     Category  @relation(fields: [categoryId], references: [id])
+  categoryId   Int?
+  category     Category? @relation(fields: [categoryId], references: [id])
   ownerUserId  Int?
   ownerUser    User?     @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   ownerGroupId Int?
