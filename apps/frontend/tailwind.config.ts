@@ -28,7 +28,12 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       colors: {
-        primary: '#00a6fb',
+        calendarBg: '#0B2840',
+        eventHover: '#113F63',
+      },
+      backgroundImage: {
+        'hero-pattern':
+          "url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.wallpapersden.com%2Fimage%2Fdownload%2Fmacos-12-monterey-stock-dark_bGxsaGiUmZqaraWkpJRobWllrWdma2U.jpg&f=1&nofb=1&ipt=a94c1942c6470e9a4f41ff851674b8b20ab994feb36f85dfec086ec4f9cd3602&ipo=images')",
       },
     },
   },

@@ -25,15 +25,15 @@ export default function MonthlyView(props: MonthlyViewProps) {
 
   return (
     <div className='flex items-center justify-center h-screen'>
-      <div className='bg-background rounded-lg shadow-lg w-[1000px]'>
-        <div className='flex items-center justify-between bg-gray-500 text-primary-foreground p-4 rounded-t-lg'>
+      <div className='rounded-lg shadow-lg w-[1000px] bg-calendarBg bg-opacity-80 text-white'>
+        <div className='flex items-center justify-between text-primary-foreground p-4 rounded-t-lg'>
           <button
             onClick={handlePreviousMonth}
             className='p-2 rounded-full hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground'
           >
             <ChevronLeftIcon className='w-5 h-5' />
           </button>
-          <div className='text-lg font-medium'>
+          <div className='text-lg font-medium text-white'>
             {props.currentDate.toLocaleString('hu', { month: 'long' })} {props.currentDate.getFullYear()}{' '}
           </div>
           <button
@@ -45,7 +45,10 @@ export default function MonthlyView(props: MonthlyViewProps) {
         </div>
         <div className='grid grid-cols-7 p-2'>
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
-            <div key={day} className='flex items-center justify-center h-16 font-medium text-muted-foreground border'>
+            <div
+              key={day}
+              className='flex items-center justify-center h-16 font-medium text-muted-foreground border text-inherit'
+            >
               {day}
             </div>
           ))}
@@ -57,18 +60,18 @@ export default function MonthlyView(props: MonthlyViewProps) {
           {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => (
             <div
               key={day}
-              className={`h-20 cursor-pointer hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary border p-2 ${
+              className={`h-20 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary border p-2 text-inherit ${
                 today.getDate() === day &&
                 today.getMonth() === props.currentDate.getMonth() &&
                 today.getFullYear() === props.currentDate.getFullYear()
-                  ? 'bg-gray-500 text-primary-foreground font-medium font-bold font-lg'
+                  ? 'text-primary-foreground font-medium font-bold font-lg'
                   : ''
               }`}
             >
               <div className='flex flex-col'>
                 <span className='self-end'>{day}</span>
                 <div className='flex flex-col items-center self-start'>
-                  <div className='bg-secondary text-secondary-foreground rounded-md text-xs overflow-auto scrollbar-webkit max-h-12 max-w-28'>
+                  <div className='bg-transparent text-secondary-foreground rounded-md text-xs overflow-auto scrollbar-webkit max-h-12 max-w-28'>
                     {props.events.map((event) => {
                       const eventStartDate = new Date(event.startDate);
                       const eventEndDate = new Date(event.endDate);
@@ -83,10 +86,10 @@ export default function MonthlyView(props: MonthlyViewProps) {
                           return (
                             <button
                               key={event.id}
-                              className='mt-1 bg-gray-300 rounded px-1 min-w-28 max-w-fit hover:bg-gray-400'
+                              className='mt-1 bg-transparent rounded px-1 min-w-28 max-w-fit hover:bg-eventHover flex flex-col'
                               onClick={() => props.onEventClick(event.id)}
                             >
-                              {event.name}
+                              <p className='self-start'>~ {event.name}</p>
                             </button>
                           );
                         }
@@ -102,10 +105,10 @@ export default function MonthlyView(props: MonthlyViewProps) {
                           return (
                             <button
                               key={event.id}
-                              className='mt-1 bg-gray-300 rounded px-1 min-w-28 max-w-fit hover:bg-gray-400'
+                              className='mt-1 bg-transparent rounded px-1 min-w-28 max-w-fit hover:bg-eventHover flex flex-col'
                               onClick={() => props.onEventClick(event.id)}
                             >
-                              {event.name}
+                              <p className='self-start'>~ {event.name}</p>
                             </button>
                           );
                         }
@@ -118,10 +121,10 @@ export default function MonthlyView(props: MonthlyViewProps) {
                         return (
                           <button
                             key={event.id}
-                            className='mt-1 bg-gray-300 rounded px-1 min-w-28 max-w-fit hover:bg-gray-400'
+                            className='mt-1 bg-transparent rounded px-1 min-w-28 max-w-fit hover:bg-eventHover flex flex-col'
                             onClick={() => props.onEventClick(event.id)}
                           >
-                            {event.name}
+                            <p className='self-start'>~ {event.name}</p>
                           </button>
                         );
                       }

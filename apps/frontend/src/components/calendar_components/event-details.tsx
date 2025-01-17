@@ -46,7 +46,7 @@ export default function EventDetails(props: EventDetailsProps) {
   return (
     <div>
       {props.isEventDetails ? (
-        <div className='flex flex-col fixed top-32 right-0 bg-white rounded-lg border-2 border-black p-6 w-full max-w-sm overflow-auto mr-5'>
+        <div className='flex flex-col fixed top-32 right-0 bg-calendarBg rounded-lg border-2 border-black p-6 w-full max-w-sm overflow-auto mr-5 text-gray-400'>
           <div className='flex flex-col items-center justify-between mb-4'>
             <button
               className='self-end border-2 border-black bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-lg'

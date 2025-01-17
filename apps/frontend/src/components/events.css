@@ -1,0 +1,12 @@
+.flex {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+body {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  background-color: blueviolet;
+}
